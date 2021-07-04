@@ -1,0 +1,6 @@
+flask
+fastapi
+deta
+flask-cors
+pytz
+requests

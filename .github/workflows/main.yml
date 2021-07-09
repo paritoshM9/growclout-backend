@@ -16,10 +16,14 @@ jobs:
         curl -fsSL https://get.deta.dev/cli.sh | sh
     - name: Deploy-Backend
       run: |
+        ~/.deta/bin/deta clone --name DETAMICRONAME --project DETAPROJECTNAME tmpb/
+        cp -r tmpb/.deta ./backend
         ~/.deta/bin/deta deploy backend
 
     - name: Deploy-Cron
       run: |
+        ~/.deta/bin/deta clone --name DETAMICRONAME --project DETAPROJECTNAME tmpc/
+        cp -r tmpc/.deta ./backend
         ~/.deta/bin/deta deploy cron-job
 
     - name: Set up environment variables backend

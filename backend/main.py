@@ -60,6 +60,7 @@ def fetch_user_record_data(user, data_type):
     "data": result_data_list
     }
     logging.error("Time taken to fetch: " + str(time.time() - t1))
+    logging.error("Test log - ignore")
     return jsonify(response, 200)
 
 @app.route('/enable', methods=["POST"])

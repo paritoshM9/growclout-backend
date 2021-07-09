@@ -21,14 +21,16 @@ jobs:
       run: |
         ~/.deta/bin/deta clone --name backend --project default tmp/
         cp -r tmp/.deta backend/
-        cp requirements.txt backend/
+        cp tmp/main.py backend/
+        cp tmp/requirements.txt backend/
         ~/.deta/bin/deta deploy backend
 
     - name: Deploy-Cron
       run: |
-        ~/.deta/bin/deta clone --name cron-job --project default tmp/
-        cp -r tmp/.deta bcron-job
-        cp requirements.txt cron-job/
+        ~/.deta/bin/deta clone --name cron-job --project default tmp2/
+        cp -r tmp2/.deta cron-job/
+        cp tmp2/main.py cron-job/
+        cp tmp2/requirements.txt cron-job/
         ~/.deta/bin/deta deploy cron-job
 
     - name: Set up environment variables backend

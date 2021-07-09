@@ -21,7 +21,6 @@ jobs:
       run: |
         ~/.deta/bin/deta clone --name backend --project default tmp/
         cp -r tmp/.deta backend/
-        cp main.py backend/
         cp requirements.txt backend/
         ~/.deta/bin/deta deploy backend
 
@@ -29,7 +28,6 @@ jobs:
       run: |
         ~/.deta/bin/deta clone --name cron-job --project default tmp/
         cp -r tmp/.deta bcron-job
-        cp main.py cron-job/
         cp requirements.txt cron-job/
         ~/.deta/bin/deta deploy cron-job
 

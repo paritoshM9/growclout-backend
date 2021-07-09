@@ -1,9 +1,6 @@
 name: deploy-to-deta
 
-on:
-  push:
-    branches: [ master ]
-  workflow_dispatch:
+on: [push]
 
 jobs:
   deploy:

@@ -9,9 +9,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      DETA_TOKEN: ${{ secrets.DETA_TOKEN }}
+      DETA_ACCESS_TOKEN: ${{ secrets.DETA_TOKEN }}
       DETA_KEY: ${{ secrets.DETA_KEY }}
-     
+
     steps:
     - uses: actions/checkout@v2
     - name: Install Deta CLI

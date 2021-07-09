@@ -130,8 +130,3 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-.deta
-
-*/.deta
-
-*/.deta/*

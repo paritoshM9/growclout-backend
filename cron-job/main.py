@@ -3,8 +3,11 @@ import requests
 import datetime, pytz
 import logging
 import time
+import os
 
-deta = Deta("xxxxx") # Deta Base Access Key
+DETA_KEY = os.environ.get("DETA_KEY")
+
+deta = Deta(DETA_KEY)
 db_users = deta.Base("users")
 db_records = deta.Base("user_records")
 
@@ -79,6 +82,7 @@ def fetch_users_from_db():
 
 
 def update_last_updated(user, current_time):
+    # current_time = int(time.time())
     logging.error("Updating last processed time of user " + user["username"] + " to " + str(current_time))
     user["last_updated"] = current_time
     user_updated = db_users.put(user)
@@ -91,6 +95,7 @@ def update_stats(event):
     if (len(users) == 0):
         return "No user to be updated in this cycle"
 
+    #tstamp = datetime.datetime.utcnow().isoformat()
     tz = pytz.timezone("UTC")
     tstamp = datetime.datetime.now(tz).isoformat()
     logging.warning(tstamp)
@@ -108,6 +113,7 @@ def update_stats(event):
             user_stats.append(market_cap)
             user_stats.append(followers_count)
             records[user["username"]] = user_stats
+            # update_last_updated(user, current_time)
 
     new_record = {}
     new_record["timestamp"] = tstamp
@@ -125,4 +131,3 @@ def update_stats(event):
     summary = summary + " in time : " + str(time.time() - t1)
     logging.error("Time taken by cron job: " + str(time.time() - t1))
     return summary
-

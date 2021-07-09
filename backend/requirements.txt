@@ -1,6 +1,6 @@
 flask
 fastapi
-deta
+deta==0.9
 flask-cors
 pytz
 requests

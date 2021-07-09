@@ -5,8 +5,11 @@ import datetime, pytz
 import logging
 import time
 import requests
+import os
 
-deta = Deta("xxxxx") # Deta Base Access Key
+DETA_KEY = os.environ.get("DETA_KEY")
+
+deta = Deta(DETA_KEY)
 db_users = deta.Base("users")
 db_records = deta.Base("user_records")
 
@@ -133,6 +136,7 @@ def create_user():
         logging.error("calling update stats")
         update_stats(username, user)
         return jsonify(user, 201)
+
     except:
         user = db_users.put({
             "username": username,
@@ -192,7 +196,6 @@ def get_market_cap_last_30_days():
 Cron Job Functions. Triggered when new user is created
 
 """
-
 
 def get_btc_value():
     api = "https://bitclout.com/api/v0/get-exchange-rate"
@@ -288,4 +291,3 @@ def update_stats(newuser, user_json):
 
     logging.error("Time taken by cron job: " + str(time.time() - t1))
     return "new db updated correctly"
-

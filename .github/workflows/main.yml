@@ -1,0 +1,46 @@
+name: deploy-to-deta
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DETA_TOKEN: ${{ secrets.DETA_TOKEN }}
+      DETA_KEY: ${{ secrets.DETA_KEY }}
+     
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Deta CLI
+      run: |
+        curl -fsSL https://get.deta.dev/cli.sh | sh
+    - name: Deploy-Backend
+      run: |
+        ~/.deta/bin/deta clone --name backend --project default tmp/
+        cp -r tmp/.deta backend/
+        cp main.py backend/
+        cp requirements.txt backend/
+        ~/.deta/bin/deta deploy backend
+
+    - name: Deploy-Cron
+      run: |
+        ~/.deta/bin/deta clone --name cron-job --project default tmp/
+        cp -r tmp/.deta bcron-job
+        cp main.py cron-job/
+        cp requirements.txt cron-job/
+        ~/.deta/bin/deta deploy cron-job
+
+    - name: Set up environment variables backend
+      run: |
+        cd backend
+        echo DETA_KEY=$DETA_KEY >> .env
+        ~/.deta/bin/deta update --env .env
+
+    - name: Set up environment variables cron
+      run: |
+        cd cron-job
+        echo DETA_KEY=$DETA_KEY >> .env
+        ~/.deta/bin/deta update --env .env

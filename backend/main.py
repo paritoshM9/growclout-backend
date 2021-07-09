@@ -233,6 +233,7 @@ def get_follower_counts(user):
     try:
         response = requests.post(follower_details_api, json = payload_follower).json()
         followers_count = response["NumFollowers"]
+        logging.error("Proof for new deployment" + user)
 
         return followers_count
     except:
